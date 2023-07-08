@@ -1,0 +1,333 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.util.*;
+import java.sql.*;
+class ars
+{
+  
+  public static void main(String[] args)
+  {
+	 JFrame mframe =new JFrame("ARS");
+	 JButton login =new JButton("Login");
+	 JButton signup =new JButton("Signup");
+	  JButton admin =new JButton("Admin");
+	 login.setBounds(100,100,100,30);
+	 signup.setBounds(340,100,100,30);
+	 admin.setBounds(600,100,100,30);
+	 mframe.add(login);
+	 mframe.add(signup);
+	 mframe.add(admin);
+	 mframe.setSize(1000,600);
+	 mframe.setLayout(null);
+	 mframe.setVisible(true);
+	 mframe.getContentPane().setBackground(Color.YELLOW);
+	
+	 login.addActionListener(new ActionListener()
+	 {
+		public void actionPerformed(ActionEvent e)
+		{
+            JFrame login_frame =new JFrame("User Login");
+			
+			
+			JLabel username= new JLabel("Enter username");
+			username.setFont(new Font("Arial", Font.BOLD, 15));
+			JTextField enteruser =new JTextField("");
+			JLabel password = new JLabel("Enter password");
+			
+			 password.setFont(new Font("Arial", Font.BOLD, 15));
+			JTextField enterpass =new JTextField("");
+			JButton in =new JButton("Login");
+			
+      			
+		    username.setBounds(100,100,120,30);
+			enteruser.setBounds(270,107,170,22);
+			password.setBounds(100,160,120,30);
+            enterpass.setBounds(270,170,170,22);	
+            in.setBounds(230,350,100,30);			
+			login_frame.add(username);
+			login_frame.add(enteruser);
+			login_frame.add(password);
+			login_frame.add(enterpass);
+			login_frame.add(in);
+			//mframe.setVisible(false);
+			login_frame.setSize(600,600);
+			login_frame.setLayout(null);
+			login_frame.getContentPane().setBackground(Color.PINK);
+			login_frame.setVisible(true);
+			
+			in.addActionListener(new ActionListener()
+			{
+			 public void actionPerformed(ActionEvent e)
+			 {
+				
+			try
+			   {
+				int d=0;
+				Connection con=null;
+				Class.forName("com.mysql.cj.jdbc.Driver"); 
+				con=DriverManager.getConnection("jdbc:mysql://localhost/ars","root","root");
+				PreparedStatement ps;
+				ResultSet rs;
+				System.out.println(con);
+				Statement stmt=con.createStatement();
+				String uname =enteruser.getText();
+				String pass =enterpass.getText();
+			   String sql="select count(*) from users where name='"+uname+"'and password='"+pass+"';";
+			  System.out.println(sql);
+		       rs=stmt.executeQuery(sql);
+			   rs.next();
+			   d=(rs.getInt(1));
+				System.out.println(d);
+				
+				  login_frame.setVisible(false);
+				  JFrame airframe =new JFrame("Welcome to Aditya Airlines");
+				  
+				   String data[][]={ {"101","Amit","670000","fsdwd","gdqwd","rer","ef","dwe"} ,
+									 {"101","Amit","670000","fsdwd","gdqwd","rer","ef","dwe"}  ,
+									 {"101","Amit","670000","fsdwd","gdqwd","rer","ef","dwe"}  ,
+									 {"101","Amit","670000","fsdwd","gdqwd","rer","ef","dwe"}  ,
+									 {"101","Amit","670000","fsdwd","gdqwd","rer","ef","dwe"}  
+                          };    
+					String column[]={"Flight_id","Flight_Name","Source","Destination","Date","Arrival_time","Departure","Flight_Price"};         
+					JTable jt=new JTable(data,column); 
+					 jt.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 15));
+					  jt.getTableHeader().setForeground(Color.white);
+					 jt.getTableHeader().setBackground(Color.black);
+					 jt.setForeground(Color.blue);
+					  jt.setFont(new Font("", 1, 15));
+                     jt.setRowHeight(24);					
+					jt.setBounds(100,100,200,300);          
+					JScrollPane sp=new JScrollPane(jt);	
+				
+				   airframe.add(sp);
+				   airframe.setSize(1200,700);
+				//  airframe.setLayout(null);
+				  airframe.setVisible(true);
+				  
+				  
+				
+				
+				}
+			catch(Exception exp)
+			{
+			System.out.println(exp);
+			}
+					
+			 }
+			});
+		
+		}			
+		 
+	 });
+	 
+	 
+	  // admin login code
+	 
+	 
+	 
+	 
+	
+	 admin.addActionListener(new ActionListener()
+	 {
+		public void actionPerformed(ActionEvent e)
+		{
+			JFrame admin_frame =new JFrame("Admin Login");
+			 JLabel welcome= new JLabel("Welcome to Admin Login");
+			  JLabel username= new JLabel("Enter admin name");
+			username.setFont(new Font("Arial", Font.BOLD, 15));
+			JTextField enteruser =new JTextField("");
+			JLabel password = new JLabel("Enter password");
+			 password.setFont(new Font("Arial", Font.BOLD, 15));
+			JTextField enterpass =new JTextField("");
+			JButton adminin =new JButton("Login");   
+		    username.setBounds(100,130,150,30);
+			enteruser.setBounds(270,137,170,22);
+			password.setBounds(100,190,120,30);
+            enterpass.setBounds(270,200,170,22);	
+            adminin.setBounds(230,350,100,30);	
+			welcome.setBounds(150,50,250,40);
+			welcome.setFont(new Font("Arial",Font.BOLD,20));
+			admin_frame.add(welcome);
+			admin_frame.add(username);
+			admin_frame.add(enteruser);
+			admin_frame.add(password);
+			admin_frame.add(enterpass);
+			admin_frame.add(adminin);
+			admin_frame.setSize(600,600);
+			admin_frame.setLayout(null);
+			admin_frame.getContentPane().setBackground(Color.GREEN);
+		    admin_frame.setVisible(true);
+			
+			//admin login button
+			adminin.addActionListener(new ActionListener()
+			{
+			 public void actionPerformed(ActionEvent e)
+			 {
+				 				 
+				int d=0;
+				String uname =enteruser.getText();
+				String pass =enterpass.getText();
+				
+				 if(uname.equals("admin") && pass.equals("admin"))
+				 {
+					 System.out.println("okk");
+				  admin_frame.setVisible(false);
+				  JFrame airframe =new JFrame("Admin");
+				  
+				  	 ars l1 =new ars();
+				    String dbs[][]=l1.funky();
+				 
+                
+				 
+				/* 
+			  for(int i=0;i<dbs.length;i++)
+			  {
+				 for(int j=0;j<dbs[i].length;j++)
+				 {
+					 System.out.println(dbs[i][j]);
+				 }
+			  }		*/		 
+					String column[]={"Flight_id","Flight_Name","Source","Destination","Date","Arrival_time","Departure","Flight_Price"};         
+					JTable jt=new JTable(dbs,column); 
+					 jt.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 15));
+					  jt.getTableHeader().setForeground(Color.white);
+					 jt.getTableHeader().setBackground(Color.black);
+					 jt.setForeground(Color.blue);
+					  jt.setFont(new Font("", 1, 15));
+                     jt.setRowHeight(24);					
+					jt.setBounds(100,100,200,100);          
+					JScrollPane sp=new JScrollPane(jt);	
+					//sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				    JButton add = new JButton("Add");
+					JButton remove =new JButton("remove");
+					JButton update =new JButton("update");
+	                JButton home = new JButton("Home");
+					JButton exit = new JButton("Exit");
+					//JPanel panel =new JPanel();
+				//	panel.setBounds(30,40,1100,100);
+					//panel.setBackground(Color.red);
+					//panel.add(sp);
+					add.setBounds(280,400,100,40);
+					remove.setBounds(430,400,100,40);
+					update.setBounds(580,400,100,40);
+					home.setBounds(730,400,100,40);
+					exit.setBounds(880,400,100,40);
+
+				   airframe.add(add);
+				   airframe.add(remove);
+				   airframe.add(update);
+				   airframe.add(home);
+				   airframe.add(exit);
+				    //airframe.add(panel);
+				   
+				    airframe.add(sp);
+				   airframe.setSize(1200,700);
+
+				  airframe.setVisible(true);
+				  
+				  
+				  
+				  add.addActionListener(new ActionListener()
+				  {
+					  public void actionPerformed(ActionEvent e)
+					  {
+						 // airframe.setVisible(false);
+						  JFrame addflight = new JFrame("Add a Flight");
+						  JButton b = new JButton("Av");
+						   b.setBounds(280,400,100,40);
+						  ars l2 = new ars();
+					  
+						  String[][]data=l2.funky();
+						    
+			  	
+						  JTable kt=new JTable(data,column); 
+					 kt.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 15));
+					  kt.getTableHeader().setForeground(Color.white);
+					 kt.getTableHeader().setBackground(Color.black);
+					 kt.setForeground(Color.blue);
+					  kt.setFont(new Font("", 1, 15));
+                     kt.setRowHeight(24);					
+					kt.setBounds(100,100,200,100);          
+					JScrollPane ps=new JScrollPane(kt);	
+					addflight.add(b);
+					addflight.add(ps);
+					addflight.setSize(1200,700);
+					addflight.setVisible(true);
+						   
+						   b.addActionListener(new ActionListener()
+						   {
+							   public void actionPerformed(ActionEvent e)
+							   {
+								 kt=new JTable(data,column);
+								 kt.repaint();
+							   }
+						   }
+						   );
+						   
+					  }
+					  
+				  });
+				 }
+			 }
+					 
+			});
+			
+		}
+	 });
+	  
+  }
+  
+  
+  
+  
+  
+  
+  
+   public String[][] funky()
+	   {
+		   String[][]data=new String[0][0];
+		     try
+			   {
+				  System.out.println("wassup");
+				int d=0;
+				Connection con=null;
+				Class.forName("com.mysql.cj.jdbc.Driver"); 
+				con=DriverManager.getConnection("jdbc:mysql://localhost/ars","root","root");
+				PreparedStatement ps;
+				ResultSet rs;
+				Statement stmt=con.createStatement();
+				rs=stmt.executeQuery("select count(*) from flights");
+				  rs.next();
+				  int count=rs.getInt(1);
+				  	data=new String[count][8];
+	              int i=0,j=0,k=1;
+				  rs=stmt.executeQuery("select * from flights ");
+				  for(i=0;i<count;i++)
+				  {		
+			        j=0;
+					 k=1;
+                     rs.next();			  
+			         System.out.println(rs.getString(k));
+					 
+					 
+					 for(j=0;j<8;j++)
+					 {
+						 
+						 data[i][j]=rs.getString(k);
+						 k++;
+					 }
+					 
+				  }
+				   return data;
+				    
+				}
+			catch(Exception exp)
+			{
+			System.out.println(exp);
+			}
+					
+			  return data;
+			 
+	   }
+}
